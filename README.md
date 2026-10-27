@@ -18,7 +18,9 @@ Build with `npm run build`. Preview the production build with `npm run preview -
 - Type a thought and press **Add** or Enter. Shift+Enter adds a new line.
 - Use **New goal** to give a goal optional completion steps.
 - Click the square to complete a task. Goals with unfinished steps open their editor first.
-- Completion triggers a pixel burst, a synthesized coin chime, and vibration where supported.
+- Drag the dotted grip to reorder tasks with a finger or mouse. Long lists scroll near the edge. Both To do and Done retain their own order after reload. With a grip focused, use ArrowUp / ArrowDown to reorder by keyboard.
+- Click the flag to toggle **IMPORTANT**: the task title and badge turn red. You can also set importance when creating or editing a goal. Importance does not change your chosen order.
+- Completion triggers a window shake, pixel burst, floating +1, synthesized coin chime, and vibration where supported. Completion saves immediately, even during the animation.
 - **Done** holds completed tasks; click a checkmark to reopen one. Use **···** to edit or delete.
 - **End day** saves today's wins to **Daily log**. Saving again on the same day updates that entry. Unfinished tasks stay until completed or removed.
 
@@ -26,11 +28,11 @@ Build with `npm run build`. Preview the production build with `npm run preview -
 
 Tasks, saved days, and the sound preference stay in this browser's localStorage. The original `carrot-pocket-v1` storage key is preserved, so the redesign keeps existing records. No account, API key, server, external font, or database is required. Data does not sync between devices; clearing browser storage deletes it. There are no scheduled background notifications.
 
-Sound plays after interaction, subject to browser audio policy. Vibration requires browser support and is unavailable on iOS Safari. Reduced-motion preferences disable particle and crush animations. Hardware sound and haptics should be checked on a real phone.
+Sound plays after interaction, subject to browser audio policy. Vibration requires browser support and is unavailable on iOS Safari. Reduced-motion preferences disable particle and crush animations. Hardware sound and haptics should be checked on a real phone. Vibration is independent of the sound toggle; unsupported or blocked vibration never prevents task completion.
 
 ## Validation
 
-The production build and Chromium browser flows were verified: migration of existing local data, quick capture, reload persistence, draft retention when switching views or sound, goal conditions, completion, daily review, unfinished tasks, reopening and editing. Layouts were checked at widths of 320, 375, 390, 430, 768, and 1440 pixels, including the GitHub Pages `/tips/` path.
+The production build and Chromium browser flows were verified: migration of existing local data, quick capture, reload persistence, draft retention when switching views or sound, goal conditions, completion, daily review, unfinished tasks, reopening and editing. Layouts were checked at widths of 320, 375, 390, 430, 768, and 1440 pixels, including the GitHub Pages `/tips/` path. Additional Chromium tests used touch input to reorder both views, auto-scroll a 25-task list, preserve order and importance after reload, check keyboard and mouse reordering, and verify visual feedback, immediate completion saving, vibration API calls, and reduced-motion behavior. Physical phone vibration remains device-dependent.
 
 ## GitHub Pages
 
