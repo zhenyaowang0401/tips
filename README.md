@@ -34,3 +34,9 @@ npm run dev -- --port 5173
 已通过生产构建，以及 Chromium 手机尺寸（390 × 844）/桌面尺寸的功能验证：快速记录、刷新持久化、目标条件、完成反馈触发、结束今天、未完成保留、重新打开任务、无横向溢出和无脚本异常。声音听感与实体手机震动需在真机确认。
 
 当前项目只使用 Vite 开发与构建，页面使用原生 JavaScript/CSS。启动开发服务器即可编辑，无需额外服务。
+
+## GitHub Pages 发布
+
+可直接使用的静态网页位于远程 `gh-pages` 分支。首次在仓库 Settings → Pages 中选择 **Deploy from a branch**，分支选择 **gh-pages**、目录选择 **/ (root)**，然后保存。GitHub 完成发布后，地址为 https://zhenyaowang0401.github.io/tips/ 。此地址只有在 Pages 启用且部署成功后才可使用。
+
+后续更新源码后需重新执行 `npm ci && npm run build`，并把 `dist` 的内容更新到 `gh-pages` 分支。根目录放置空的 `.nojekyll` 文件，保持源代码和发布产物分离。`vite.config.js` 使用相对资源地址，支持 `/tips/` 子路径部署。
