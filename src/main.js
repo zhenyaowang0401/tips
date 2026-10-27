@@ -30,12 +30,11 @@ const save = () => {
     localStorage.setItem(KEY, JSON.stringify(state));
   } catch {
     storageAvailable = false;
-    toast("Could not save. Keep this page open.");
+    toast("保存失败，请先别关闭页面。");
   }
 };
 const carrot = `<svg viewBox="0 0 64 72" fill="none" aria-hidden="true" class="carrot"><path d="M30 25V9h7v10h7V5h8v15h-8v9H30Z" fill="#447443"/><path d="M30 25V15h-9V8h-8v14h9v10" fill="#719354"/><path d="M21 28h25v7h7v14h-7v7h-7v7h-7v7H18V56h-7V42h-7v-7h17Z" fill="#e97e3c"/><path d="M21 28h25v7H21v7h-7v14h-3V42H4v-7h17Z" fill="#f3a659"/><path d="M39 42h14v7H39zm-14 14h14v7H25Z" fill="#bc562b"/><path d="M21 42h7v7h-7Z" fill="#593a29"/><path d="M36 35h7v7h-7Z" fill="#593a29"/></svg>`;
 let draft = "";
-const plural = (n, word) => `${n} ${word}${n === 1 ? "" : "s"}`;
 const windowControls =
   '<span class="window-controls" aria-hidden="true"><i>_</i><i>□</i><i>×</i></span>';
 function toast(message) {
@@ -112,7 +111,7 @@ function enableSorting() {
         doneView,
       );
       vibrate(12);
-      toast("Order saved.");
+      toast("顺序已保存。");
     },
   });
 }
@@ -124,37 +123,37 @@ function render() {
     done = state.tasks.filter((t) => t.done),
     count = completedToday().length;
   $("#app").innerHTML =
-    `<div class="desktop"><header class="desktop-header"><button class="wordmark" data-action="home" aria-label="carrot home"><span>${carrot}</span>carrot</button><span class="desktop-date">${new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", weekday: "short" })}</span></header><nav class="desktop-shortcuts" aria-label="Desktop"><button class="shortcut ${filter === "all" ? "active" : ""}" data-action="home"><span class="folder-icon"><i></i></span><span>My tasks</span></button><button class="shortcut ${filter === "history" ? "active" : ""}" data-action="history"><span class="log-icon"><i></i><i></i><i></i></span><span>Daily log</span></button></nav><main class="workspace"><div class="window-shadow" aria-hidden="true"></div><section class="app-window"><div class="titlebar"><span class="window-title"><span class="title-carrot">${carrot}</span>${filter === "history" ? "daily-log.txt" : "carrot.exe"}</span>${windowControls}</div><div class="menubar"><nav aria-label="View"><button class="menu-item ${filter === "all" ? "active" : ""}" data-action="home">Tasks</button><button class="menu-item ${filter === "history" ? "active" : ""}" data-action="history">Daily log</button></nav><button class="sound-button" data-action="sound" aria-label="${state.sound ? "Mute" : "Enable"} sound" aria-pressed="${state.sound}"><span aria-hidden="true">${state.sound ? "♫" : "♪"}</span> Sound ${state.sound ? "on" : "off"}</button></div>${filter === "history" ? historyMarkup() : `<div class="window-content"><form id="quick-form" class="composer"><label for="quick-input">What's on your mind?</label><div class="input-row"><textarea id="quick-input" rows="1" maxlength="240" placeholder="Type a thought…">${esc(draft)}</textarea><button type="submit" class="retro-button add-button" aria-label="Add task">Add <span>↵</span></button></div></form><div class="list-toolbar"><div class="tabs" role="group" aria-label="Task filter"><button class="tab ${tab === "open" ? "selected" : ""}" data-tab="open">To do <span>${open.length}</span></button><button class="tab ${tab === "done" ? "selected" : ""}" data-tab="done">Done <span>${done.length}</span></button></div><button class="new-goal" data-action="goal">+ New goal</button></div><p id="drag-help" class="sr-only">Drag the dotted handle to reorder. With the handle focused, use the up and down arrow keys.</p><div class="task-list">${(tab === "open" ? open : done.slice().reverse()).map(taskMarkup).join("") || emptyMarkup()}</div><div class="window-footer"><span class="task-count"><b class="status-light"></b>${open.length} left <span class="count-separator">/</span> ${count} done today</span><button class="retro-button end-day" data-action="end">End day</button></div></div>`}<div class="statusbar"><span><span class="disk-icon" aria-hidden="true">▣</span> ${storageAvailable ? "Saved on this device" : "Storage unavailable"}</span><span class="resize-grip" aria-hidden="true">◢</span></div></section><div class="under-window"><span>one thing at a time.</span><span>✳</span></div></main><div class="desktop-decoration" aria-hidden="true"><span class="deco-spark">✳</span>${carrot}</div><footer class="taskbar"><button class="start-button retro-button" data-action="home"><span>${carrot}</span><strong>carrot</strong></button><span class="taskbar-divider"></span><button class="taskbar-app retro-inset" data-action="${filter === "history" ? "history" : "home"}"><span aria-hidden="true">${filter === "history" ? "▤" : "▣"}</span> ${filter === "history" ? "Daily log" : "My tasks"}</button><div class="taskbar-tray"><span class="tray-dot"></span><time>${new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" })}</time></div></footer></div><div id="toast" role="status"></div><div id="particles" aria-hidden="true"></div><div id="modal-root"></div>`;
+    `<div class="desktop"><header class="desktop-header"><button class="wordmark" data-action="home" aria-label="carrot 首页"><span>${carrot}</span>carrot</button><span class="desktop-date">${new Date().toLocaleDateString("zh-CN", { month: "numeric", day: "numeric", weekday: "short" })}</span></header><nav class="desktop-shortcuts" aria-label="桌面"><button class="shortcut ${filter === "all" ? "active" : ""}" data-action="home"><span class="folder-icon"><i></i></span><span>我的任务</span></button><button class="shortcut ${filter === "history" ? "active" : ""}" data-action="history"><span class="log-icon"><i></i><i></i><i></i></span><span>每日回顾</span></button></nav><main class="workspace"><div class="window-shadow" aria-hidden="true"></div><section class="app-window"><div class="titlebar"><span class="window-title"><span class="title-carrot">${carrot}</span>${filter === "history" ? "每日回顾" : "carrot"}</span>${windowControls}</div><div class="menubar"><nav aria-label="切换页面"><button class="menu-item ${filter === "all" ? "active" : ""}" data-action="home">任务</button><button class="menu-item ${filter === "history" ? "active" : ""}" data-action="history">每日回顾</button></nav><button class="sound-button" data-action="sound" aria-label="${state.sound ? "关闭" : "开启"}音效" aria-pressed="${state.sound}"><span aria-hidden="true">${state.sound ? "♫" : "♪"}</span> 音效${state.sound ? "开" : "关"}</button></div>${filter === "history" ? historyMarkup() : `<div class="window-content"><form id="quick-form" class="composer"><label for="quick-input">想到什么了？</label><div class="input-row"><textarea id="quick-input" rows="1" maxlength="240" placeholder="先记下来…">${esc(draft)}</textarea><button type="submit" class="retro-button add-button" aria-label="记下任务">记下 <span>↵</span></button></div></form><div class="list-toolbar"><div class="tabs" role="group" aria-label="任务状态"><button class="tab ${tab === "open" ? "selected" : ""}" data-tab="open">待完成 <span>${open.length}</span></button><button class="tab ${tab === "done" ? "selected" : ""}" data-tab="done">已完成 <span>${done.length}</span></button></div><button class="new-goal" data-action="goal">+ 新建目标</button></div><p id="drag-help" class="sr-only">拖动点阵手柄可调整顺序；选中手柄后也可用上下方向键调整。</p><div class="task-list">${(tab === "open" ? open : done.slice().reverse()).map(taskMarkup).join("") || emptyMarkup()}</div><div class="window-footer"><span class="task-count"><b class="status-light"></b>待完成 ${open.length} <span class="count-separator">/</span> 今天完成 ${count}</span><button class="retro-button end-day" data-action="end">结束今天</button></div></div>`}<div class="statusbar"><span><span class="disk-icon" aria-hidden="true">▣</span> ${storageAvailable ? "已保存在本机" : "无法使用本机存储"}</span><span class="resize-grip" aria-hidden="true">◢</span></div></section><div class="under-window"><span>一件一件，慢慢来。</span><span>✳</span></div></main><div class="desktop-decoration" aria-hidden="true"><span class="deco-spark">✳</span>${carrot}</div><footer class="taskbar"><button class="start-button retro-button" data-action="home"><span>${carrot}</span><strong>carrot</strong></button><span class="taskbar-divider"></span><button class="taskbar-app retro-inset" data-action="${filter === "history" ? "history" : "home"}"><span aria-hidden="true">${filter === "history" ? "▤" : "▣"}</span> ${filter === "history" ? "每日回顾" : "我的任务"}</button><div class="taskbar-tray"><span class="tray-dot"></span><time>${new Date().toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", hour12: false })}</time></div></footer></div><div id="toast" role="status"></div><div id="particles" aria-hidden="true"></div><div id="modal-root"></div>`;
   enableSorting();
   if (modal) renderModal();
 }
 function emptyMarkup() {
-  return `<div class="empty"><div class="empty-art" aria-hidden="true"><span class="empty-spark">+</span>${tab === "open" ? carrot : '<span class="big-check">✓</span>'}<span class="empty-spark second">+</span></div><h1>${tab === "open" ? "A little room for your thoughts." : "Your wins go here."}</h1><p>${tab === "open" ? "Type it. Do it. Crush it." : "Finish a task to get started."}</p></div>`;
+  return `<div class="empty"><div class="empty-art" aria-hidden="true"><span class="empty-spark">+</span>${tab === "open" ? carrot : '<span class="big-check">✓</span>'}<span class="empty-spark second">+</span></div><h1>${tab === "open" ? "想做的小事，先放在这里。" : "完成的小事，会留在这里。"}</h1><p>${tab === "open" ? "记下来，做完它，击碎它。" : "先完成一件小事吧。"}</p></div>`;
 }
 function taskMarkup(t) {
   const n = t.conditions.filter((c) => c.done).length;
   return `<article class="task ${t.done ? "done" : ""} ${t.important ? "important" : ""}" data-id="${t.id}">
-    <button class="drag-handle" data-drag="${t.id}" aria-label="Move: ${esc(t.title)}" aria-describedby="drag-help" title="Drag to reorder · Arrow keys to move"><svg viewBox="0 0 12 18" width="10" height="16" fill="currentColor" aria-hidden="true"><path d="M1 1h3v3H1zm6 0h3v3H7zM1 7h3v3H1zm6 0h3v3H7zM1 13h3v3H1zm6 0h3v3H7z"/></svg></button>
-    <button class="task-check" data-complete="${t.id}" aria-label="${t.done ? "Reopen" : "Complete"}: ${esc(t.title)}">${t.done ? "✓" : "<span>✦</span>"}</button>
-    <div class="task-body"><div class="task-title">${esc(t.title)}</div>${t.important ? '<span class="important-badge">! IMPORTANT</span>' : ""}
-    ${t.conditions.length ? `<button class="condition-progress" data-detail="${t.id}" aria-label="Edit conditions for ${esc(t.title)}"><span class="progress-track"><span style="width:${(n / t.conditions.length) * 100}%"></span></span><span>${n}/${t.conditions.length}</span><span class="goal-badge">GOAL</span></button>` : ""}</div>
-    <button class="task-priority" data-priority="${t.id}" aria-label="${t.important ? "Remove importance" : "Mark important"}: ${esc(t.title)}" aria-pressed="${!!t.important}" title="${t.important ? "Remove importance" : "Mark important"}"><svg viewBox="0 0 18 20" width="15" height="17" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 18V2m0 0h12l-3 4 3 4H3Z"/></svg></button>
-    <button class="task-more" data-detail="${t.id}" aria-label="Edit: ${esc(t.title)}">···</button>
+    <button class="drag-handle" data-drag="${t.id}" aria-label="移动： ${esc(t.title)}" aria-describedby="drag-help" title="拖动调整顺序，也可使用上下方向键"><svg viewBox="0 0 12 18" width="10" height="16" fill="currentColor" aria-hidden="true"><path d="M1 1h3v3H1zm6 0h3v3H7zM1 7h3v3H1zm6 0h3v3H7zM1 13h3v3H1zm6 0h3v3H7z"/></svg></button>
+    <button class="task-check" data-complete="${t.id}" aria-label="${t.done ? "重新打开" : "完成"}： ${esc(t.title)}">${t.done ? "✓" : "<span>✦</span>"}</button>
+    <div class="task-body"><div class="task-title">${esc(t.title)}</div>${t.important ? '<span class="important-badge">! 重要</span>' : ""}
+    ${t.conditions.length ? `<button class="condition-progress" data-detail="${t.id}" aria-label="编辑完成条件：${esc(t.title)}"><span class="progress-track"><span style="width:${(n / t.conditions.length) * 100}%"></span></span><span>${n}/${t.conditions.length}</span><span class="goal-badge">目标</span></button>` : ""}</div>
+    <button class="task-priority" data-priority="${t.id}" aria-label="${t.important ? "取消重要" : "标记重要"}： ${esc(t.title)}" aria-pressed="${!!t.important}" title="${t.important ? "取消重要" : "标记重要"}"><svg viewBox="0 0 18 20" width="15" height="17" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 18V2m0 0h12l-3 4 3 4H3Z"/></svg></button>
+    <button class="task-more" data-detail="${t.id}" aria-label="编辑： ${esc(t.title)}">···</button>
   </article>`;
 }
 function historyMarkup() {
-  return `<div class="window-content history"><div class="history-heading"><h1>Daily log</h1><span>${plural(state.days.length, "day")}</span></div><div class="history-list">${
+  return `<div class="window-content history"><div class="history-heading"><h1>每日回顾</h1><span>${state.days.length} 天</span></div><div class="history-list">${
     state.days.length
       ? state.days
           .slice()
           .reverse()
           .map(
             (d) =>
-              `<article class="history-card"><header><time>${esc(d.date)}</time><span>${d.titles.length} done <span class="orange">✦</span></span></header>${d.titles.length ? "<ul>" + d.titles.map((t) => `<li><span>✓</span>${esc(t)}</li>`).join("") + "</ul>" : "<p>A quiet day. That counts, too.</p>"}</article>`,
+              `<article class="history-card"><header><time>${esc(d.date)}</time><span>完成 ${d.titles.length} 件 <span class="orange">✦</span></span></header>${d.titles.length ? "<ul>" + d.titles.map((t) => `<li><span>✓</span>${esc(t)}</li>`).join("") + "</ul>" : "<p>今天休息一下，也没关系。</p>"}</article>`,
           )
           .join("")
-      : '<div class="empty"><span class="log-icon large-log" aria-hidden="true"><i></i><i></i><i></i></span><h2>No days saved. Yet.</h2><p>Use “End day” to keep your wins.</p></div>'
-  }</div><button class="retro-button back-button" data-action="home">← Back to tasks</button></div>`;
+      : '<div class="empty"><span class="log-icon large-log" aria-hidden="true"><i></i><i></i><i></i></span><h2>还没有保存的回顾。</h2><p>点「结束今天」，收好今天的成果。</p></div>'
+  }</div><button class="retro-button back-button" data-action="home">← 返回任务</button></div>`;
 }
 let returnFocus = null;
 function openModal(type, taskId) {
@@ -174,10 +173,10 @@ function renderModal() {
   const end = modal.type === "end";
   const tasks = completedToday();
   $("#modal-root").innerHTML =
-    `<div class="modal-backdrop"><section class="modal app-window" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="titlebar"><span class="window-title">${end ? "today.txt" : t ? "edit-task.exe" : "new-goal.exe"}</span><button class="modal-close" data-action="close" aria-label="Close dialog">×</button></div><div class="modal-content">${end ? `<div class="summary-heading"><span class="summary-icon" aria-hidden="true">✦</span><div><h2 id="modal-title">${tasks.length ? "Nice work today." : "Calling it a day?"}</h2><p>${plural(tasks.length, "little win")}.</p></div></div><div class="summary-list">${tasks.length ? "<ul>" + tasks.map((t) => `<li><span>✓</span>${esc(t.title)}</li>`).join("") + "</ul>" : "<p>Rest is part of the process.</p>"}</div><p class="carry-note">${state.tasks.filter((t) => !t.done).length} unfinished. Ready when you are.</p><button class="retro-button primary full" data-action="save-day">Save & close day <span>↵</span></button>` : `<h2 id="modal-title">${t ? "Edit task" : "Plant a goal."}</h2><form id="goal-form"><label for="goal-title">${t ? "Task" : "Goal"}</label><input id="goal-title" maxlength="240" placeholder="Finish my research" value="${esc(t?.title || "")}" required><label class="importance-option"><input id="goal-important" type="checkbox" ${t?.important ? "checked" : ""}> <span>! Important</span></label><label class="conditions-label">Done when… <span>optional</span></label><div id="condition-fields">${(t?.conditions || []).map((c) => conditionField(c)).join("")}</div><button type="button" class="add-condition" data-action="add-condition">+ Add a step</button><div class="modal-actions">${t ? '<button type="button" class="delete-button" data-action="delete">Delete task</button>' : '<button type="button" class="retro-button" data-action="close">Cancel</button>'}<button class="retro-button primary" type="submit">${t ? "Save changes" : "Add goal"} <span>↵</span></button></div></form>`}</div></section></div>`;
+    `<div class="modal-backdrop"><section class="modal app-window" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="titlebar"><span class="window-title">${end ? "今日回顾" : t ? "编辑任务" : "新建目标"}</span><button class="modal-close" data-action="close" aria-label="关闭窗口">×</button></div><div class="modal-content">${end ? `<div class="summary-heading"><span class="summary-icon" aria-hidden="true">✦</span><div><h2 id="modal-title">${tasks.length ? "今天也做得不错。" : "今天就到这里？"}</h2><p>今天完成了 ${tasks.length} 件小事。</p></div></div><div class="summary-list">${tasks.length ? "<ul>" + tasks.map((t) => `<li><span>✓</span>${esc(t.title)}</li>`).join("") + "</ul>" : "<p>休息也是今天的一部分。</p>"}</div><p class="carry-note">未完成的 ${state.tasks.filter((t) => !t.done).length} 件事会继续保留。</p><button class="retro-button primary full" data-action="save-day">收好今天 <span>↵</span></button>` : `<h2 id="modal-title">${t ? "编辑任务" : "想完成什么？"}</h2><form id="goal-form"><label for="goal-title">${t ? "任务" : "目标"}</label><input id="goal-title" maxlength="240" placeholder="比如：完成这周的研究" value="${esc(t?.title || "")}" required><label class="importance-option"><input id="goal-important" type="checkbox" ${t?.important ? "checked" : ""}> <span>! 重要</span></label><label class="conditions-label">完成条件 <span>可选</span></label><div id="condition-fields">${(t?.conditions || []).map((c) => conditionField(c)).join("")}</div><button type="button" class="add-condition" data-action="add-condition">+ 添加一个条件</button><div class="modal-actions">${t ? '<button type="button" class="delete-button" data-action="delete">删除任务</button>' : '<button type="button" class="retro-button" data-action="close">取消</button>'}<button class="retro-button primary" type="submit">${t ? "保存修改" : "记下目标"} <span>↵</span></button></div></form>`}</div></section></div>`;
 }
 function conditionField(c = { text: "", done: false }) {
-  return `<div class="condition-field"><input type="checkbox" aria-label="Complete step" ${c.done ? "checked" : ""}><input type="text" maxlength="240" placeholder="One small step" value="${esc(c.text)}" aria-label="Completion step"><button type="button" class="remove-condition" aria-label="Remove step">×</button></div>`;
+  return `<div class="condition-field"><input type="checkbox" aria-label="标记条件完成" ${c.done ? "checked" : ""}><input type="text" maxlength="240" placeholder="具体要做到什么" value="${esc(c.text)}" aria-label="完成条件"><button type="button" class="remove-condition" aria-label="移除条件">×</button></div>`;
 }
 function addTask(title, conditions = [], important = false) {
   state.tasks.push({
@@ -192,7 +191,7 @@ function addTask(title, conditions = [], important = false) {
   tab = "open";
   draft = "";
   render();
-  toast("Thought saved.");
+  toast("已记下。");
   $("#quick-input")?.focus();
 }
 let audio;
@@ -234,12 +233,12 @@ function complete(taskId, button) {
     delete t.doneAt;
     save();
     render();
-    toast("Back on your list.");
+    toast("已放回待完成。");
     return;
   }
   if (t.conditions.some((c) => !c.done)) {
     openModal("edit", t.id);
-    toast("Finish the steps to crush this goal.");
+    toast("先完成这些条件，再击碎目标。");
     return;
   }
   pending.add(taskId);
@@ -270,7 +269,7 @@ function complete(taskId, button) {
     () => {
       pending.delete(taskId);
       render();
-      toast("+1. Crushed it!");
+      toast("+1，击碎了！");
     },
     reducedMotion() ? 0 : 480,
   );
@@ -334,7 +333,7 @@ $("#app").addEventListener("click", (e) => {
       modal = null;
       save();
       render();
-      toast("Task deleted.");
+      toast("任务已删除。");
       break;
     case "end":
       openModal("end");
@@ -352,11 +351,11 @@ $("#app").addEventListener("click", (e) => {
       filter = "history";
       render();
       chime();
-      toast("Day saved. See you tomorrow.");
+      toast("今天的成果已保存，明天见。");
       break;
     }
     case "example":
-      addTask("Drink a glass of water");
+      addTask("喝一杯水");
       break;
   }
   if (b.classList.contains("remove-condition"))
@@ -391,7 +390,7 @@ $("#app").addEventListener("submit", (e) => {
       }
       save();
       render();
-      toast("Changes saved.");
+      toast("修改已保存。");
     } else addTask(title, conditions, important);
   }
 });
@@ -413,7 +412,7 @@ $("#app").addEventListener("keydown", (e) => {
     document
       .querySelector(`[data-drag="${handle.dataset.drag}"]`)
       ?.focus({ preventScroll: true });
-    toast(`Moved to ${target + 1} of ${tasks.length}.`);
+    toast(`已移至第 ${target + 1} 位，共 ${tasks.length} 件。`);
     return;
   }
   if (
@@ -434,7 +433,7 @@ $("#app").addEventListener("input", (e) => {
   if (e.target.id === "quick-input") draft = e.target.value;
 });
 render();
-if (!storageAvailable) toast("Storage unavailable. Tasks may not be saved.");
+if (!storageAvailable) toast("无法使用本机存储，记录可能无法保留。");
 
 // Keep keyboard navigation inside the open retro dialog.
 document.addEventListener("keydown", (e) => {

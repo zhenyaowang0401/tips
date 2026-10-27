@@ -1619,3 +1619,28 @@ input {
     transition: none !important;
   }
 }
+
+/* Keep short Chinese labels readable within the compact retro controls. */
+.important-badge {
+  font-family: Tahoma, "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-size: 9px;
+}
+.goal-badge {
+  font-size: 9px;
+  letter-spacing: 0;
+}
+.desktop-date {
+  letter-spacing: 0;
+}
+@media (max-width: 700px) {
+  .important-badge {
+    font-size: 9px;
+  }
+  .empty h1,
+  .empty h2 {
+    font-size: 12px;
+  }
+  .taskbar-app {
+    font-size: 10px;
+  }
+}
