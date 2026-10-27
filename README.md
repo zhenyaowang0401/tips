@@ -1,42 +1,39 @@
-# 萝卜口袋 / Carrot Pocket
+# carrot
 
-手机优先的像素风任务口袋。想到就记，做到就击碎；不是日程表。
+A tiny desktop for your thoughts. Orange, retro computer chrome, and fewer words. Built for phones first.
 
-## 本地开发
+## Develop
 
-需要 Node.js 20.19+ 或 22.12+（当前环境使用 Node.js 24）。
+Node.js 20.19+ or 22.12+ is required (validated on Node.js 24).
 
 ```sh
-cd /workspace/tips
 npm ci
 npm run dev -- --port 5173
 ```
 
-构建：`npm run build`。检查构建产物：`npm run preview -- --port 4173`。
+Build with `npm run build`. Preview the production build with `npm run preview -- --port 4173`.
 
-## 使用
+## Use
 
-- 底部消息框随手记事。Enter 发送，Shift+Enter 换行；手机可点箭头发送。
-- 「新建大目标」添加具体完成条件。点击条件进度可逐项勾选、修改。
-- 点击左侧方块完成任务：像素碎裂、合成金币音效，以及浏览器支持时的震动。条件未全部完成时会先打开条件编辑框。
-- 「已完成」中可以重新打开任务；任务右侧省略号可编辑或删除。
-- 「结束今天」保存当天完成的任务名称；同一天再次保存会更新该日回顾。未完成任务一直保留，不因跨天或结束今天而清空。
-- 「每日收获」查看已经保存的回顾。
+- Type a thought and press **Add** or Enter. Shift+Enter adds a new line.
+- Use **New goal** to give a goal optional completion steps.
+- Click the square to complete a task. Goals with unfinished steps open their editor first.
+- Completion triggers a pixel burst, a synthesized coin chime, and vibration where supported.
+- **Done** holds completed tasks; click a checkmark to reopen one. Use **···** to edit or delete.
+- **End day** saves today's wins to **Daily log**. Saving again on the same day updates that entry. Unfinished tasks stay until completed or removed.
 
-## 数据与设备
+## Storage and feedback
 
-数据自动存于当前浏览器的 localStorage，无需账号、后端、API 密钥或外部字体。不同设备之间不会同步；清除浏览器数据将删除记录。生产使用建议使用 HTTPS。
+Tasks, saved days, and the sound preference stay in this browser's localStorage. The original `carrot-pocket-v1` storage key is preserved, so the redesign keeps existing records. No account, API key, server, external font, or database is required. Data does not sync between devices; clearing browser storage deletes it. There are no scheduled background notifications.
 
-音效通过 Web Audio 在主动操作后播放；顶部按钮可关闭音效。部分手机浏览器（例如 iOS Safari）不支持网页震动；静音和浏览器策略也可能影响反馈。系统开启减少动态效果时，碎裂与浮动动画会关闭。
+Sound plays after interaction, subject to browser audio policy. Vibration requires browser support and is unavailable on iOS Safari. Reduced-motion preferences disable particle and crush animations. Hardware sound and haptics should be checked on a real phone.
 
-## 验证
+## Validation
 
-已通过生产构建，以及 Chromium 手机尺寸（390 × 844）/桌面尺寸的功能验证：快速记录、刷新持久化、目标条件、完成反馈触发、结束今天、未完成保留、重新打开任务、无横向溢出和无脚本异常。声音听感与实体手机震动需在真机确认。
+The production build and Chromium browser flows were verified: migration of existing local data, quick capture, reload persistence, draft retention when switching views or sound, goal conditions, completion, daily review, unfinished tasks, reopening and editing. Layouts were checked at widths of 320, 375, 390, 430, 768, and 1440 pixels, including the GitHub Pages `/tips/` path.
 
-当前项目只使用 Vite 开发与构建，页面使用原生 JavaScript/CSS。启动开发服务器即可编辑，无需额外服务。
+## GitHub Pages
 
-## GitHub Pages 发布
+The `main` branch holds source. The `gh-pages` branch holds the contents of `dist` plus an empty `.nojekyll` file. In repository **Settings → Pages**, select **Deploy from a branch → gh-pages → / (root)**.
 
-可直接使用的静态网页位于远程 `gh-pages` 分支。首次在仓库 Settings → Pages 中选择 **Deploy from a branch**，分支选择 **gh-pages**、目录选择 **/ (root)**，然后保存。GitHub 完成发布后，地址为 https://zhenyaowang0401.github.io/tips/ 。此地址只有在 Pages 启用且部署成功后才可使用。
-
-后续更新源码后需重新执行 `npm ci && npm run build`，并把 `dist` 的内容更新到 `gh-pages` 分支。根目录放置空的 `.nojekyll` 文件，保持源代码和发布产物分离。`vite.config.js` 使用相对资源地址，支持 `/tips/` 子路径部署。
+The site URL is https://zhenyaowang0401.github.io/tips/ once GitHub's deployment succeeds. `vite.config.js` uses relative asset URLs for subpath hosting. After source changes, rebuild and update the contents of `gh-pages`; committing only to `main` does not update the published site.
